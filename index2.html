@@ -1,23 +1,27 @@
 <html>
 	<head>
 		<script>
-
+				var watchId;
 				var getLocation = function( position ) {
-					console.log( position.coords );
 					document.getElementById('lat').innerHTML = "latitude: "+ position.coords.latitude;
 					document.getElementById('lng').innerHTML = "longitude: "+ position.coords.longitude;	
 					document.getElementById('speed').innerHTML = "speed: "+ position.coords.speed;	
-
         			return { "lat": position.coords.lat, "lng": position.coords.lng }
 			     };
 
+var geoOptions = {
+          enableHighAccuracy: true,
+          maximumAge: 30000,
+          timeout: 27000
+      };
 		      	var error = function( error ) {
 		        	alert( error.code + " : " + error.message );
 		      	};
 
 		      (function(){
 					if( navigator.geolocation ) {
-          				navigator.geolocation.watchPosition( getLocation, error )
+          				watchId = navigator.geolocation.watchPosition( getLocation, error, geoOptions  );
+
         			} else {
           				alert( "Browser not supports Geolocation" )
        				}
